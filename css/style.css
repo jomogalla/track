@@ -57,3 +57,13 @@ border-top-right-radius: 0px;
 .running{
 	background-color: #97baa1;	
 }
+.unused{
+	text-decoration: line-through;
+}
+.checkbox input[type="checkbox"]{
+	margin-left: 0px;
+}
+.clickable-row:hover{
+	background-color: #D1E8AF;
+	cursor: pointer;
+}

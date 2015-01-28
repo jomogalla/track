@@ -1,0 +1,38 @@
+BOOOT BOY 
+
+Todo
+
+
+
+{ Phase 1 } 
+X Connect to API
+
+X Add Project Functionality
+> Add roles/tasks functionality to project
+	X get modals working
+
+> Add Start Time Entry (just on a project, no tasks or roles)
+
+
+- Comments -
+> Use hardcoded authentication for meow
+> Use default task & roles
+
+{ Phase 2 }
+
+> Edit roles/tasks funtionality to project
+> Time entry for roles/tasks on project
+> Add routing/pages
+
+
+{ Phase 3 }
+> Login/Authentication Functionality
+> Register Functionality
+
+
+{ Phase 4 }
+> Separate App.js file into module specific files
+> Integrate Gulp/less
+
+- Comments -
+> Do empty hrefs need to be removed from a elements?
