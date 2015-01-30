@@ -20,8 +20,6 @@
     <link href="http://maxcdn.bootstrapcdn.com/font-awesome/4.2.0/css/font-awesome.min.css" rel="stylesheet">
 
     <link href="./css/style.css" rel="stylesheet">
-
-    <!-- Just for debugging purposes. Don't actually copy these 2 lines! -->
     <!--[if lt IE 9]><script src="../../assets/js/ie8-responsive-file-warning.js"></script><![endif]-->
     <!-- // <script src="../../assets/js/ie-emulation-modes-warning.js"></script> -->
 
@@ -42,38 +40,51 @@
         </div>
         <div id="navbar" class="navbar-collapse collapse">
           <ul class="nav navbar-nav">
-            <li class="active"><a href="#"><!-- <i class="fa fa-clock-o"></i> --> track</a></li>
+            <li ><a href="./track.html"><!-- <i class="fa fa-clock-o"></i> --> track</a></li>
             <li><a href="./edit.html"><!-- <i class="fa fa-wrench"></i> --> edit</a></li>
-            <li ><a href="./view.html"><!-- <i class="fa fa-line-chart"></i> --> view</a></li>
+            <li class="active"><a href="#"><!-- <i class="fa fa-line-chart"></i> --> view</a></li>
           </ul>
         </div>
       </div>
     </nav>
 
     <div class="container theme-showcase" ng-controller="TimeTrack as vm" role="main">
-      <div class="row">
-        <div class="col-sm-4 project-wrap" ng-repeat="project in vm.projects">
-          <table class="table table-condensed">
-            <tbody>
-              <thead>
-                <h3> {{project.Name}} </h3>
-              </thead>
-              <tr ng-repeat="task in project.ProjectTasks">
-                <td>
-                  {{task.Name}}
-                </td>
-                <td ng-bind="task.newTimeEntry.Hours">
-                  
-                </td>
-                <td>
-                  <button class="btn btn-link btn-xs pull-right" ng-click="vm.startTracking(task, project)" ng-show="!task.newTimeEntry.isInTrackingMode"><i class="fa fa-play"></i></button>
-                  <button class="btn btn-link btn-xs pull-right" ng-click="vm.stopTracking(task, project)" ng-show="task.newTimeEntry.isInTrackingMode"><i class="fa fa-pause"></i></button>
-                </td>
-              </tr>
-            </tbody>
-          </table>
-        </div>
-      </div>
+    <table class="table table-condensed">
+      <tbody>
+        <thead>
+          <h2> time entries </h2>
+        </thead>
+        <tr>
+          <th>
+            <h4> id </h4>
+          </th>
+          <th>
+            <h4> started </h4>
+          </th>
+          <th>
+            <h4> ended </h4>
+          </th>
+          <!-- <th>
+            <h5> billable</h5>
+          </th> -->
+        </tr>
+        <tr ng-repeat="timeEntry in vm.timeEntries">
+          <td>
+            {{timeEntry.ProjectTaskId}}
+          </td>
+          <td>
+            {{timeEntry.TimeIn}}
+          </td>
+          <td>
+            {{timeEntry.TimeOut}}
+          </td>
+         <!--  <td>
+            {{timeEntry.Billable}}
+          </td> -->
+        </tr>
+      </tbody>
+    </table>
+
     </div> <!-- /container -->
 
 

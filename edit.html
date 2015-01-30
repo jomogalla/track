@@ -41,32 +41,19 @@
     <nav class="navbar navbar-inverse navbar-fixed-top">
       <div class="container">
         <div class="navbar-header">
-          <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
-            <span class="sr-only">Toggle navigation</span>
-            <span class="icon-bar"></span>
-            <span class="icon-bar"></span>
-            <span class="icon-bar"></span>
-          </button>
-          <a class="navbar-brand" href="#">Time Track</a>
+          <!-- <a class="navbar-brand" href="#">Time Track</a> -->
         </div>
         <div id="navbar" class="navbar-collapse collapse">
           <ul class="nav navbar-nav">
             <li class=""><a href="./track.html"><!-- <i class="fa fa-clock-o"></i> --> track</a></li>
             <li class="active"><a href="#"><!-- <i class="fa fa-wrench"></i> --> edit</a></li>
-            <li class="unused"><a href="#"><!-- <i class="fa fa-line-chart"></i> --> view</a></li>
+            <li ><a href="./view.html"><!-- <i class="fa fa-line-chart"></i> --> view</a></li>
           </ul>
         </div>
       </div>
     </nav>
 
     <div class="container theme-showcase" ng-controller="TimeTrack as vm" role="main">
-
-      <!-- Main jumbotron for a primary marketing message or call to action -->
-      <!-- <p>
-        <button type="button" class="btn btn-lg btn-link" ng-click="vm.addProject()">Add Project</button>
-      </p> -->
-
-      <!-- <p class="text-center"> -->
       <p>
         <button class="btn btn-lg btn-link" data-toggle="modal" data-target="#addProjectModal">Add Project</button>
       </p>
@@ -132,7 +119,7 @@
             </div>
             <div class="panel-body">
               <div ng-repeat="task in project.ProjectTasks" class="list-group-item"> {{task.Name}}
-                <!-- <button type="button" class="btn btn-link pull-right" ng-click="vm.editTask(project)" data-toggle="modal" data-target="#addProjectTaskModal">Edit</button> -->
+                <button type="button" class="btn btn-link pull-right" ng-click="vm.editTask(project)" data-toggle="modal" data-target="#addProjectTaskModal">Edit</button>
               </div>
               <!-- <div ng-repeat="role in project.ProjectRoles" class="list-group-item"><i class="fa fa-user"></i> {{role.Name}}</div> -->
             </div>

@@ -1,6 +1,7 @@
 BOOOT BOY 
 
-Todo
+-- To Do
+> organize view so it separates time entries between dates
 
 
 
@@ -12,6 +13,7 @@ X Add Project Functionality
 	X get modals working
 
 > Add Start Time Entry (just on a project, no tasks or roles)
+> Figure out a good way to add comments
 
 
 - Comments -
@@ -36,3 +38,12 @@ X Add Project Functionality
 
 - Comments -
 > Do empty hrefs need to be removed from a elements?
+
+
+
+FUTURE --
+Grabbing all the 
+
+QUESTIONS -- 
+-- is it bad to not use self = this
+-----vs just using vm
