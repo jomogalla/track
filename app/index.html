@@ -1,0 +1,55 @@
+
+<!DOCTYPE html>
+<html lang="en" ng-app="app">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="">
+    <meta name="author" content="">
+    <link rel="icon" href="../../favicon.ico">
+
+    <title>Time Track</title>
+
+    <!-- Bootstrap core CSS -->
+
+    <link href="./bootstrap.css" rel="stylesheet">
+    <!-- Bootstrap theme -->
+    <link href="./bootstrap-theme.css" rel="stylesheet">
+    <!-- Font Awesome -->
+    <link href="http://maxcdn.bootstrapcdn.com/font-awesome/4.2.0/css/font-awesome.min.css" rel="stylesheet">
+
+    <link href="./style.css" rel="stylesheet">
+
+  </head>
+
+  <body role="document">
+
+    <!-- Fixed navbar -->
+    <nav class="navbar navbar-inverse navbar-fixed-top">
+      <div class="container">
+        <div class="navbar-header">
+          <!-- <a class="navbar-brand" href="#">Time Track</a> -->
+        </div>
+        <div id="navbar" class="navbar-collapse collapse">
+          <ul class="nav navbar-nav">
+            <li class=""><a href="#track"><!-- <i class="fa fa-clock-o"></i> --> track</a></li>
+            <li class="active"><a href="#"><!-- <i class="fa fa-wrench"></i> --> manage</a></li>
+            <li ><a href="#view"><!-- <i class="fa fa-line-chart"></i> --> view</a></li>
+          </ul>
+        </div>
+      </div>
+    </nav>
+
+    <div class="container theme-showcase" ng-view="" ng-controller="TimeTrack as vm" role="main">
+    </div><!-- /.col-sm-4 -->
+
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js"></script>
+    <script src="./bootstrap.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/angular.js/1.3.10/angular.js"></script>
+    <script src="./angular-stuff.js"></script>
+    <script src="./ui-bootstrap-tpls-0.12.0.js"></script>
+    <script src="./angular-route.js"></script>
+    <script src="./http-service.js"></script>
+  </body>
+</html>

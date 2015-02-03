@@ -81,3 +81,7 @@ tr td button{
 tr:hover td button{
 	display: block;
 }
+.white{
+	background-color: rgba(255, 255, 255, 0.4);
+	border-radius: 3px;
+}

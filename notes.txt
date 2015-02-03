@@ -1,7 +1,36 @@
 BOOOT BOY 
 
+-- Thoughts
+> create a uniform naming across the board for cleaning data before the server request
+----> right now we have formatted, new, cleaned, etc
+> change time entry data that gets pushed to include seconds?
+> round time data on view page to nearest 15 minutes?
+
+
 -- To Do
+X connect httpservice
+X rebuild addtask, addproject, archive, starttime, stoptime, getprojects, gettasks, gettimeentries to use httpservice
+X add delete task functionality
+X add rename task functionality
+X add billable boolean task functionality
+X add requirecomment boolean task functionality
+> configure routing
+> set up angular to use templates
+> refactor angular-stuff.js into separate controller files
+> make start/stop time display to be more robust.
+> make comments on view page editable
+> make time on view page editable
+> allow deleting of entries on view page
 > organize view so it separates time entries between dates
+> remove tracking and editing from tables? 
+> ngblur on a task name change wont send data to the server
+
+
+
+
+>>> BUGs <<<<
+> When RequireComment and Billable are both switched to true, one of them sets itself to false
+> Cant add task after a project is freshly created
 
 
 
@@ -12,8 +41,8 @@ X Add Project Functionality
 > Add roles/tasks functionality to project
 	X get modals working
 
-> Add Start Time Entry (just on a project, no tasks or roles)
-> Figure out a good way to add comments
+X Add Start Time Entry (just on a project, no tasks or roles)
+X Figure out a good way to add comments
 
 
 - Comments -
