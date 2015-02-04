@@ -7,8 +7,8 @@
             <h4 ng-bind="project.Name"></h4>
           </th>
           <th>
-            <button type="button" class="btn btn-link btn-sm pull-right" ng-show="!project.Archived" ng-click="vm.toggleArchive(project)">Archive</button>
-            <button type="button" class="btn btn-link btn-sm pull-right" ng-show="project.Archived" ng-click="vm.toggleArchive(project)">Unarchive</button>
+            <button type="button" class="btn btn-link btn-sm pull-right" ng-show="!project.Archived" ng-click="vm.toggleArchive(project)">Not Archived</button>
+            <button type="button" class="btn btn-link btn-sm pull-right" ng-show="project.Archived" ng-click="vm.toggleArchive(project)">Archived</button>
           </th>
           <th>
             <button type="button" class="btn btn-link btn-sm pull-right" ng-click="vm.addTask(project)">Add Task</button>

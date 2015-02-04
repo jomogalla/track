@@ -18,9 +18,8 @@ X configure routing
 X FIX GULP FILE SO IT ACTUALLY PUTS FILES INTO THE BUILD FOLDER
 X Have tracking page load any unstopped timeentries as running
 > Use LESS
-> change controllers to Papa Style
-	- Declare functions up top vm.functionName = functionName, then put the function below
-	- Remove ng-controller="Controller as vm" from templates, pass in ngroute
+X change controllers to Papa Style
+> add navbar to its on file & controller
 > add active navigation items
 > update comments to save on change
 > if you start one task, it ends any currently running tasks
@@ -40,5 +39,6 @@ X make start/stop time display to be more robust.
 
 >>> BUGs <<<<
 > When RequireComment and Billable are both switched to true, one of them sets itself to false
+	^ WHAT THE HELL IS GOING ON HERE, THE REQUESTS ARE ALL GOOD
 > Cant add task after a project is freshly created
 	probably need to do a get request then add the project to the list of projects

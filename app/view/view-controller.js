@@ -15,8 +15,6 @@
 		activate();
 
 		function activate(){
-			httpService.setAuthHeader();
-
 			// Grab all the time entries -- 
 		    httpService.getCollection('timeEntries').then(function(timeEntries) {
 				self.timeEntries = timeEntries;

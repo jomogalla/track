@@ -62,7 +62,7 @@
 				console.log('time entry started');
 				task.newTimeEntry.TimeEntryId = data.TimeEntryId;
 			});
-		};
+		}
 		
 		function stopTracking(task){
 			var currentTime = new Date();
@@ -92,8 +92,6 @@
 		}
 		function activate(){
 			var halfLoaded = false;
-
-			httpService.setAuthHeader();
 
 			// Grab all the projects -- 
 	    	httpService.getCollection('projects').then(function(projects) {

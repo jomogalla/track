@@ -87,7 +87,7 @@ tr:hover td button{
 	border-bottom: solid 2px #d2d2d2;
 }
 .active{
-	background-color: green;
+	background-color: #F0F0F0;
 }
 /* Sign In Stuff */
 .form-signin {

@@ -6,7 +6,8 @@ var gulp = require('gulp'),
   refresh = require('gulp-livereload'),
   lrserver = require('tiny-lr')(),
   express = require('express'),
-  livereload = require('connect-livereload')
+  livereload = require('connect-livereload'),
+  jshint = require('gulp-jshint'),
   livereloadport = 35729,
   serverport = 5000;
  
@@ -33,6 +34,12 @@ gulp.task('js', function(){
    .pipe(refresh(lrserver));
  
 });
+
+gulp.task('hint', function() {
+  return gulp.src(['!./app/vendorJS/*','app/**/*.js'])
+    .pipe(jshint())
+    .pipe(jshint.reporter('default'));
+});
  
 //Task for moving html-files to the build-dir
 //added as a convenience to make sure this gulpfile works without much modification
@@ -44,7 +51,7 @@ gulp.task('html', function(){
  
 //Convenience task for running a one-off build
 gulp.task('build', function() {
-  gulp.run('html', 'js', 'css');
+  gulp.run('html', 'hint', 'js', 'css');
 });
  
 gulp.task('serve', function() {
@@ -64,6 +71,7 @@ gulp.task('watch', function() {
   
   //Add watching on js-files
   gulp.watch('app/**/*.js', function() {
+    gulp.run('hint');
     gulp.run('js');
   });
  

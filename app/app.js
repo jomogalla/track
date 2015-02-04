@@ -1,8 +1,8 @@
 (function () {
 	'use strict';
   
-	angular.module('app', ['ui.bootstrap', 'ngRoute'])
-		.config(function($routeProvider){
+	angular.module('app', ['ui.bootstrap', 'ngRoute', 'satellizer'])
+		.config(function($routeProvider, $authProvider){
 			$routeProvider
 				.when('/', {
 					templateUrl : 'track/track.html',
