@@ -14,10 +14,17 @@ X add delete task functionality
 X add rename task functionality
 X add billable boolean task functionality
 X add requirecomment boolean task functionality
-> configure routing
-> set up angular to use templates
+X configure routing
+X FIX GULP FILE SO IT ACTUALLY PUTS FILES INTO THE BUILD FOLDER
+X Have tracking page load any unstopped timeentries as running
+> Use LESS
+> add active navigation items
+> update comments to save on change
+> if you start one task, it ends any currently running tasks
+> get timeentries to add to the time entry list when stopped(probably with a get request, not from the system)
+X set up angular to use templates
 > refactor angular-stuff.js into separate controller files
-> make start/stop time display to be more robust.
+X make start/stop time display to be more robust.
 > make comments on view page editable
 > make time on view page editable
 > allow deleting of entries on view page
@@ -31,48 +38,4 @@ X add requirecomment boolean task functionality
 >>> BUGs <<<<
 > When RequireComment and Billable are both switched to true, one of them sets itself to false
 > Cant add task after a project is freshly created
-
-
-
-{ Phase 1 } 
-X Connect to API
-
-X Add Project Functionality
-> Add roles/tasks functionality to project
-	X get modals working
-
-X Add Start Time Entry (just on a project, no tasks or roles)
-X Figure out a good way to add comments
-
-
-- Comments -
-> Use hardcoded authentication for meow
-> Use default task & roles
-
-{ Phase 2 }
-
-> Edit roles/tasks funtionality to project
-> Time entry for roles/tasks on project
-> Add routing/pages
-
-
-{ Phase 3 }
-> Login/Authentication Functionality
-> Register Functionality
-
-
-{ Phase 4 }
-> Separate App.js file into module specific files
-> Integrate Gulp/less
-
-- Comments -
-> Do empty hrefs need to be removed from a elements?
-
-
-
-FUTURE --
-Grabbing all the 
-
-QUESTIONS -- 
--- is it bad to not use self = this
------vs just using vm
+	probably need to do a get request then add the project to the list of projects

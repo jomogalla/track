@@ -1,0 +1,37 @@
+.navbar-white {
+    position: relative;
+    z-index: 1002;
+    margin-bottom: 0;
+    background-color: @brand-primary;
+    .navbar-nav {
+        &> li {
+            &> a {
+                color: #fff;
+            }
+        }
+
+        &> .active {
+            &> a,
+            &> a:hover,
+            &> a:focus {
+                color: #fff;
+                background-color: darken(@brand-primary, 20%);
+            }
+        }
+    }
+
+    .navbar-toggle {
+        border-color: darken(@brand-primary, 20%);
+        .icon-bar {
+            background-color: #fff;
+        }
+    }
+
+    .navbar-toggle:hover, .navbar-toggle:focus {
+        background-color: darken(@brand-primary, 20%);
+    }
+
+    .navbar-collapse, .navbar-form {
+        border-color: darken(@brand-primary, 20%);
+    }
+}

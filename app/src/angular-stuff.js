@@ -8,7 +8,7 @@
 					templateUrl : 'track.html',
 				})
 				.when('/track', {
-					templateUrl : './track.html',
+					templateUrl : 'track.html',
 				})
 				.when('/manage', {
 					templateUrl : 'edit.html',
@@ -24,7 +24,7 @@
     	.controller('ModalAddProjectCtrl', ModalAddProjectCtrl);
   
 	TimeTrack.$inject = ['$http', '$modal', '$filter', '$interval', 'httpService'];
-	function TimeTrack ($http, $modal, $filter, $interval, httpService) {
+	function TimeTrack ($http, $modal, $filter,  $interval, httpService) {
   		var authStr = btoa('jasonstest2:jason');
 
 	  	// Setting Authentication Header
@@ -32,6 +32,7 @@
 
 
 
+		var halfLoaded = false;
 	    var self = this;
 	    
 	    self.projects = [];
@@ -41,11 +42,33 @@
 	    // Grab all the projects -- 
 	    httpService.getCollection('projects').then(function(projects) {
 			self.projects = projects;
+			if(halfLoaded){
+				restartRunningTimeEntry();
+			}
+			else{
+				halfLoaded = true;
+			}
 		});
 
 		// Grab all the time entries -- 
 	    httpService.getCollection('timeEntries').then(function(timeEntries) {
 			self.timeEntries = timeEntries;
+
+			for(var i = 0; i < timeEntries.length; i++){
+				if(self.timeEntries[i].TimeIn != null){
+					self.timeEntries[i].TimeIn = formatTimeFromServer(self.timeEntries[i].TimeIn);
+				}
+				if(self.timeEntries[i].TimeOut != null){
+					self.timeEntries[i].TimeOut = formatTimeFromServer(self.timeEntries[i].TimeOut);
+				}
+			}
+			if(halfLoaded){
+				restartRunningTimeEntry();
+			}
+			else{
+				halfLoaded = true;
+			}
+
 		});
 
 	    self.addProject = function() {
@@ -122,6 +145,23 @@
 			// console.log($filter('date')((currentTime - task.newTimeEntry.TimeIn), 'hh:mm:ss'));
 
 
+			self.startClock(task);
+
+			var formattedTimeEntry = {
+				"ProjectRoleId": defaultRole.ProjectRoleId,
+				"ProjectTaskId": task.ProjectTaskId,
+				"Billable": task.Billable,
+				"TimeIn":  formattedTime,
+				"TimeOut": undefined,
+	            "Comment": undefined,
+			};
+
+			httpService.createItem('TimeEntries', formattedTimeEntry).then(function(data) {
+				console.log('time entry started');
+				task.newTimeEntry.TimeEntryId = data.TimeEntryId;
+			});
+		};
+		self.startClock = function(task){
 			task.currentInterval = $interval(function(){
 				var currentTime = new Date();
 				var timeDifference = currentTime - task.newTimeEntry.TimeIn;
@@ -138,20 +178,17 @@
 				}
 				
 			}, 1000);
+		};
+		self.stopClock = function(timeEntry){
+			var currentTime = new Date();
+			
+			var defaultRole = project.ProjectRoles[0];
 
-			var formattedTimeEntry = {
-				"ProjectRoleId": defaultRole.ProjectRoleId,
-				"ProjectTaskId": task.ProjectTaskId,
-				"Billable": task.Billable,
-				"TimeIn":  formattedTime,
-				"TimeOut": undefined,
-	            "Comment": undefined,
-			};
+			task.newTimeEntry.isInTrackingMode = false;
 
-			httpService.createItem('TimeEntries', formattedTimeEntry).then(function(data) {
-				console.log('time entry started');
-				task.newTimeEntry.TimeEntryId = data.TimeEntryId;
-			});
+			console.log("stopping time");
+
+			$interval.cancel(task.currentInterval);
 		};
 		self.stopTracking = function(task, project){
 			var currentTime = new Date();
@@ -177,7 +214,7 @@
 			};
 
 	  		httpService.updateItem('TimeEntries', task.newTimeEntry.TimeEntryId, formattedTimeEntry).then(function(data) {
-				console.log('Task billing status updated');
+				self.timeEntries.push(task.newTimeEntry);
 			});
 		};
 		self.toggleBillable = function(task, project){
@@ -225,9 +262,40 @@
 				});
 			}
 		}
+		function restartRunningTimeEntry(){
+			for(var i = 0; i < self.timeEntries.length; i++){
+				if(self.timeEntries[i].TimeOut == null){
+					self.timeEntries[i].isInTrackingMode = true;
+
+
+
+					var activeTask = findTaskById(self.timeEntries[i].ProjectTaskId)
+					// find this timeentries task
+					// hook it on as newTimeEntry
+					// then starttiming
+					activeTask.newTimeEntry = self.timeEntries[i];
+					self.startClock(activeTask);
+
+				}
+			}
+		}
+		function findTaskById(id){
+			for(var j = 0; j < self.projects.length; j++){
+				for(var k = 0; k < self.projects[j].ProjectTasks.length; k++){
+					if(self.projects[j].ProjectTasks[k].ProjectTaskId === id){
+						return self.projects[j].ProjectTasks[k];
+					}
+				}
+			}
+		}
 
 		function formatTimeForServer(time){
 	  		return $filter('date')(time, 'M/d/yyyy hh:mma');
+	  	}
+	  	function formatTimeFromServer(time){
+	  		var splitTime = time.split(/[:T-]/);
+	  		var useableDate = new Date(splitTime[0], splitTime[1]-1, splitTime[2], splitTime[3], splitTime[4], splitTime[5])
+	  		return useableDate;
 	  	}
 	}
 

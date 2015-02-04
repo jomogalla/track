@@ -61,9 +61,6 @@ border-top-right-radius: 0px;
 .unused{
 	text-decoration: line-through;
 }
-.checkbox input[type="checkbox"]{
-	margin-left: 0px;
-}
 .clickable-row:hover{
 	background-color: #eeeeee;
 	cursor: pointer;
@@ -84,4 +81,11 @@ tr:hover td button{
 .white{
 	background-color: rgba(255, 255, 255, 0.4);
 	border-radius: 3px;
+}
+.navbar-white{
+	background-color: rgba(252, 252, 252, 0.97);
+	border-bottom: solid 2px #d2d2d2;
+}
+.active{
+	background-color: green;
 }

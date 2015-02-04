@@ -1,5 +1,5 @@
 var gulp = require('gulp'),
-  // sass = require('gulp-sass'),
+  less = require('gulp-less'),
   // browserify = require('gulp-browserify'),
   concat = require('gulp-concat'),
   embedlr = require('gulp-embedlr'),
@@ -37,7 +37,7 @@ gulp.task('js', function(){
 //Task for moving html-files to the build-dir
 //added as a convenience to make sure this gulpfile works without much modification
 gulp.task('html', function(){
-  gulp.src('app/**/*.html')
+  gulp.src(['app/index.html','app/views/*.html'])
     .pipe(gulp.dest('build'))
     .pipe(refresh(lrserver));
 });
@@ -57,7 +57,7 @@ gulp.task('serve', function() {
  
 gulp.task('watch', function() {
  
-  //Add watching on sass-files
+  //Add watching on css-files
   gulp.watch('app/css/*.css', function() {
     gulp.run('css');
   });
@@ -68,7 +68,7 @@ gulp.task('watch', function() {
   });
  
   //Add watching on html-files
-  gulp.watch('app/**/*.html', function () {
+  gulp.watch(['app/index.html','app/views/*.html'], function () {
     gulp.run('html');
   });
 });

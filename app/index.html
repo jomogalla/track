@@ -23,25 +23,25 @@
 
   </head>
 
-  <body role="document">
+  <body role="document" ng-controller="TimeTrack as vm">
 
     <!-- Fixed navbar -->
-    <nav class="navbar navbar-inverse navbar-fixed-top">
+    <nav class="navbar navbar-white navbar-fixed-top">
       <div class="container">
         <div class="navbar-header">
           <!-- <a class="navbar-brand" href="#">Time Track</a> -->
         </div>
         <div id="navbar" class="navbar-collapse collapse">
           <ul class="nav navbar-nav">
-            <li class=""><a href="#track"><!-- <i class="fa fa-clock-o"></i> --> track</a></li>
-            <li class="active"><a href="#"><!-- <i class="fa fa-wrench"></i> --> manage</a></li>
-            <li ><a href="#view"><!-- <i class="fa fa-line-chart"></i> --> view</a></li>
+            <li><a href="#track"><!-- <i class="fa fa-clock-o"></i> --> track</a></li>
+            <li><a href="#manage"><!-- <i class="fa fa-wrench"></i> --> manage</a></li>
+            <li><a href="#view"><!-- <i class="fa fa-line-chart"></i> --> view</a></li>
           </ul>
         </div>
       </div>
     </nav>
 
-    <div class="container theme-showcase" ng-view="" ng-controller="TimeTrack as vm" role="main">
+    <div class="container theme-showcase" ng-view="" role="main">
     </div><!-- /.col-sm-4 -->
 
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js"></script>
