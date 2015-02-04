@@ -22,7 +22,9 @@
 			// function setAuthHeader(authStr) {
 			function setAuthHeader() {
 				var authStr = btoa('jasonstest2:jason');
-				$http.defaults.headers.common.Authorization = authStr;
+
+			  	// Setting Authentication Header
+				$http.defaults.headers.common.Authorization = 'Basic ' + authStr;
 			}
 
 			function getCollection(entity) {

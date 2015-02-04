@@ -15,7 +15,11 @@
 				})
 				.when('/view', {
 					templateUrl : 'view.html',
+				})
+				.when('/login', {
+					templateUrl : 'login.html',
 				});
+
 		  });
 
 	angular.module('app')

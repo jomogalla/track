@@ -13,17 +13,17 @@
 
     <!-- Bootstrap core CSS -->
 
-    <link href="./bootstrap.css" rel="stylesheet">
+    <link href="bootstrap.css" rel="stylesheet">
     <!-- Bootstrap theme -->
-    <link href="./bootstrap-theme.css" rel="stylesheet">
+    <link href="bootstrap-theme.css" rel="stylesheet">
     <!-- Font Awesome -->
     <link href="http://maxcdn.bootstrapcdn.com/font-awesome/4.2.0/css/font-awesome.min.css" rel="stylesheet">
 
-    <link href="./style.css" rel="stylesheet">
+    <link href="style.css" rel="stylesheet">
 
   </head>
 
-  <body role="document" ng-controller="TimeTrack as vm">
+  <body role="document">
 
     <!-- Fixed navbar -->
     <nav class="navbar navbar-white navbar-fixed-top">
@@ -45,11 +45,17 @@
     </div><!-- /.col-sm-4 -->
 
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js"></script>
-    <script src="./bootstrap.js"></script>
+    <script src="vendorJS/bootstrap.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/angular.js/1.3.10/angular.js"></script>
-    <script src="./angular-stuff.js"></script>
-    <script src="./ui-bootstrap-tpls-0.12.0.js"></script>
-    <script src="./angular-route.js"></script>
-    <script src="./http-service.js"></script>
+    <!-- // <script src="./angular-stuff.js"></script> -->
+    <script src="app.js"></script>
+    <script src="vendorJS/ui-bootstrap-tpls-0.12.0.js"></script>
+    <script src="vendorJS/angular-route.js"></script>
+    <script src="services/http-service.js"></script>
+    <script src="track/track-controller.js"></script>
+    <script src="view/view-controller.js"></script>
+    <script src="manage/manage-controller.js"></script>
+    <script src="modals/modal-add-project.js"></script>
+    <script src="modals/modal-add-task.js"></script>
   </body>
 </html>

@@ -18,6 +18,9 @@ X configure routing
 X FIX GULP FILE SO IT ACTUALLY PUTS FILES INTO THE BUILD FOLDER
 X Have tracking page load any unstopped timeentries as running
 > Use LESS
+> change controllers to Papa Style
+	- Declare functions up top vm.functionName = functionName, then put the function below
+	- Remove ng-controller="Controller as vm" from templates, pass in ngroute
 > add active navigation items
 > update comments to save on change
 > if you start one task, it ends any currently running tasks

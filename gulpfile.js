@@ -27,7 +27,7 @@ gulp.task('css', function(){
  
 //Task for processing js with browserify
 gulp.task('js', function(){
-  gulp.src('app/src/*.js')
+  gulp.src('app/**/*.js')
    // .pipe(concat('bundle.js'))
    .pipe(gulp.dest('build'))
    .pipe(refresh(lrserver));
@@ -37,7 +37,7 @@ gulp.task('js', function(){
 //Task for moving html-files to the build-dir
 //added as a convenience to make sure this gulpfile works without much modification
 gulp.task('html', function(){
-  gulp.src(['app/index.html','app/views/*.html'])
+  gulp.src(['app/index.html','app/**/*.html'])
     .pipe(gulp.dest('build'))
     .pipe(refresh(lrserver));
 });
@@ -63,12 +63,12 @@ gulp.task('watch', function() {
   });
   
   //Add watching on js-files
-  gulp.watch('app/src/*.js', function() {
+  gulp.watch('app/**/*.js', function() {
     gulp.run('js');
   });
  
   //Add watching on html-files
-  gulp.watch(['app/index.html','app/views/*.html'], function () {
+  gulp.watch(['app/index.html','app/**/*.html'], function () {
     gulp.run('html');
   });
 });
