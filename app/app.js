@@ -1,13 +1,11 @@
 (function () {
 	'use strict';
   
-	angular.module('app', ['ui.bootstrap', 'ngRoute', 'satellizer'])
-		.config(function($routeProvider, $authProvider){
+	angular.module('app', ['ui.bootstrap', 'ngRoute', 'ngCookies', 'angular-loading-bar'])
+		.config(function($routeProvider){
 			$routeProvider
 				.when('/', {
-					templateUrl : 'track/track.html',
-					controller: 'TrackCtrl',
-					controllerAs: 'vm',
+					redirectTo: '/track',
 				})
 				.when('/track', {
 					templateUrl : 'track/track.html',
@@ -26,8 +24,11 @@
 				})
 				.when('/login', {
 					templateUrl : 'login/login.html',
-					// controller: 'ViewCtrl',
-					// controllerAs: 'vm',
+					controller: 'LoginCtrl',
+					controllerAs: 'vm',
+				})
+				.otherwise({
+					redirectTo: '/track'
 				});
 		});
 })();

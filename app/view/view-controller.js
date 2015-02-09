@@ -5,18 +5,46 @@
 		.module('app')
 		.controller('ViewCtrl', ViewCtrl);
 
-	ViewCtrl.$inject = ['httpService'];
-	function ViewCtrl(httpService){
+	ViewCtrl.$inject = ['$scope', '$filter','httpService'];
+	function ViewCtrl($scope, $filter, httpService){
 
 		var self = this;
 
 		self.timeEntries = [];
+		self.nextDay = nextDay;
+		self.previousDay = previousDay;
 
 		activate();
+
+		// self.dt = new Date();
+		self.date = new Date();
+
+		// $scope.$watch('self.date', function(current, original){
+		// 	var filteredDate = $filter('date')(self.date, 'M-d-yyyy');
+		// 	httpService.getItem('timeEntries/date', filteredDate).then(function(timeEntries){
+		// 		self.timeEntries = timeEntries;
+		// 	});
+		// });
+
+		function nextDay(){
+			self.date.setDate(self.date.getDate()+1);
+			var filteredDate = $filter('date')(self.date, 'M-d-yyyy');
+			httpService.getItem('timeEntries/date', filteredDate).then(function(timeEntries){
+				self.timeEntries = timeEntries;
+			});
+		}
+		function previousDay(){
+			self.date.setDate(self.date.getDate()-1);
+			var filteredDate = $filter('date')(self.date, 'M-d-yyyy');
+			httpService.getItem('timeEntries/date', filteredDate).then(function(timeEntries){
+				self.timeEntries = timeEntries;
+			});
+		}
 
 		function activate(){
 			// Grab all the time entries -- 
 		    httpService.getCollection('timeEntries').then(function(timeEntries) {
+
 				self.timeEntries = timeEntries;
 
 				for(var i = 0; i < timeEntries.length; i++){

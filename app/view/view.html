@@ -1,54 +1,64 @@
-
-<table class="table table-condensed table-hover">
-  <tbody>
-    <thead>
-      <h2> time entries </h2>
-    </thead>
-    <tr>
-      <th>
-        <h4> task </h4>
-      </th>
-      <th>
-        <h4> project </h4>
-      </th>
-      <th>
-        <h4> started </h4>
-      </th>
-      <th>
-        <h4> ended </h4>
-      </th>
-      <th>
-        <h4> total time </h4>
-      </th>
-      <th>
-        <h4> comment </h4>
-      </th>
-      <!-- <th>
-        <h5> billable</h5>
-      </th> -->
-    </tr>
-    <tr ng-repeat="timeEntry in vm.timeEntries">
-      <td ng-bind="timeEntry.ProjectTaskName">        
-      </td>
-      <td ng-bind="timeEntry.ProjectName">        
-      </td>
-      <td>
-        {{timeEntry.TimeIn | date:"MMM d '--' h:mm a"}}
-      </td>
-      <td>
-        {{timeEntry.TimeOut | date:"MMM d '--' h:mm a"}}
-      </td>
-      <td>
-        <span ng-bind="timeEntry.TotalTime" ng-show="timeEntry.TimeOut"></span>
+<div class="table-responsive">
+  <table class="table table-condensed table-hover">
+    <tbody>
+      <thead>
+        <h2> {{vm.date | date:"EEEE, MMM d"}} 
+          <small>
+            <button type="button" class="btn btn-link btn-lg pull-right" ng-click="vm.nextDay()">next</button>
+            <button type="button" class="btn btn-link btn-lg pull-right" ng-click="vm.previousDay()">previous</button>
+          </small>
+        </h2>
         
-      </td>
-      <td ng-bind="timeEntry.Comment">
+      </thead>
+      <tr>
+        <th>
+          <h4> task </h4>
+        </th>
+        <th>
+          <h4> project </h4>
+        </th>
+        <th>
+          <h4> started </h4>
+        </th>
+        <th>
+          <h4> ended </h4>
+        </th>
+        <th>
+          <h4> total time </h4>
+        </th>
+        <th>
+          <h4> comment </h4>
+        </th>
+        <!-- <th>
+          <h5> billable</h5>
+        </th> -->
+      </tr>
+      <tr ng-repeat="timeEntry in vm.timeEntries">
+        <td ng-bind="timeEntry.ProjectTaskName">        
+        </td>
+        <td ng-bind="timeEntry.ProjectName">        
+        </td>
+        <td>
+          {{timeEntry.TimeIn | date:"h:mm a"}}
+        </td>
+        <td>
+          {{timeEntry.TimeOut | date:"h:mm a"}}
+        </td>
+        <td>
+          <span ng-bind="timeEntry.TotalTime" ng-show="timeEntry.TimeOut"></span>
+          
+        </td>
+        <td ng-bind="timeEntry.Comment">
 
-      </td>
-     <!--  <td>
-        {{timeEntry.Billable}}
-      </td> -->
-    </tr>
-  </tbody>
-</table>
+        </td>
+       <!--  <td>
+          {{timeEntry.Billable}}
+        </td> -->
+      </tr>
+    </tbody>
+  </table>
+</div>
+<div class="row lead text-center" ng-show="!vm.timeEntries.length > 0">
+      <em>no time entries</em>
+</div>
 

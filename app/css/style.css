@@ -65,6 +65,7 @@ border-top-right-radius: 0px;
 	background-color: #eeeeee;
 	cursor: pointer;
 }
+
 .project-wrap{
 /*	background-color: #fff;*/
 /*	padding: 0;
@@ -88,6 +89,12 @@ tr:hover td button{
 }
 .active{
 	background-color: #F0F0F0;
+}
+.green{
+	background-color: green;
+}
+.faux-link{
+	padding: 15px;
 }
 /* Sign In Stuff */
 .form-signin {
@@ -114,7 +121,7 @@ tr:hover td button{
 .form-signin .form-control:focus {
   z-index: 2;
 }
-.form-signin input[type="email"] {
+.form-signin input[type="text"] {
   margin-bottom: -1px;
   border-bottom-right-radius: 0;
   border-bottom-left-radius: 0;

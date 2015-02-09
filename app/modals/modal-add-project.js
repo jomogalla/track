@@ -9,8 +9,6 @@
   	function ModalAddProjectCtrl ($modalInstance, httpService){
 		var modalVM = this;
 
-		httpService.setAuthHeader();
-
 	  	modalVM.add = function () {
 	  		
 			var newProject = {

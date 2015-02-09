@@ -25,6 +25,12 @@ gulp.task('css', function(){
     .pipe(gulp.dest('build'))
     .pipe(refresh(lrserver));
 });
+gulp.task('less', function(){
+  gulp.src('app/css/*.less')
+    .pipe(less())
+    .pipe(gulp.dest('build'))
+    .pipe(refresh(lrserver));
+});
  
 //Task for processing js with browserify
 gulp.task('js', function(){
@@ -34,6 +40,13 @@ gulp.task('js', function(){
    .pipe(refresh(lrserver));
  
 });
+
+// gulp.task('vendorJS', function(){
+//   gulp.src('app/vendorJS/*.js')
+//     .pipe(plugins.concat('vendor.js'))
+//     .pipe(gulp.dest('build'))
+//     .pipe(refresh(lrserver));
+// });
 
 gulp.task('hint', function() {
   return gulp.src(['!./app/vendorJS/*','app/**/*.js'])
@@ -51,7 +64,7 @@ gulp.task('html', function(){
  
 //Convenience task for running a one-off build
 gulp.task('build', function() {
-  gulp.run('html', 'hint', 'js', 'css');
+  gulp.run('html', 'hint', 'js', 'css', 'less');
 });
  
 gulp.task('serve', function() {
@@ -68,12 +81,23 @@ gulp.task('watch', function() {
   gulp.watch('app/css/*.css', function() {
     gulp.run('css');
   });
+
+  //Add watching on css-files
+  gulp.watch('app/css/*.less', function() {
+    gulp.run('less');
+  });
   
   //Add watching on js-files
-  gulp.watch('app/**/*.js', function() {
+  gulp.watch(['!app/vendorJS/*.js'
+              ,'app/**/*.js'], function() {
     gulp.run('hint');
     gulp.run('js');
   });
+
+  // // Add watching on vendor JS
+  // gulp.watch('app/vendor/*.js', function() {
+  //   gulp.run('vendorJS');
+  // });
  
   //Add watching on html-files
   gulp.watch(['app/index.html','app/**/*.html'], function () {

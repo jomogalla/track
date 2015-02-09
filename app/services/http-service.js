@@ -19,12 +19,9 @@
 				deleteItem: deleteItem
 			});
 
-			// function setAuthHeader(authStr) {
-			function setAuthHeader() {
-				var authStr = btoa('jasonstest2:jason');
-
+			function setAuthHeader(authStr) {
 			  	// Setting Authentication Header
-				$http.defaults.headers.common.Authorization = 'Basic ' + authStr;
+				$http.defaults.headers.common.Authorization = authStr;
 			}
 
 			function getCollection(entity) {

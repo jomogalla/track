@@ -1,0 +1,27 @@
+{
+  "name": "task-shadow",
+  "version": "1.0.0",
+  "description": "A small Angular app designed to help the user track time spent on projects and tasks.",
+  "main": "gulpfile.js",
+  "dependencies": {
+    "gulp": "^3.8.10",
+    "angular-loading-bar": "^0.6.0",
+    "connect-livereload": "^0.5.2",
+    "express": "^4.11.1",
+    "gulp-browserify": "^0.5.1",
+    "gulp-concat": "^2.4.3",
+    "gulp-embedlr": "^0.5.2",
+    "gulp-jshint": "^1.9.2",
+    "gulp-less": "^2.0.1",
+    "gulp-livereload": "^3.6.0",
+    "gulp-load-plugins": "^0.8.0",
+    "gulp-minify-css": "^0.4.3",
+    "tiny-lr": "^0.1.5"
+  },
+  "devDependencies": {},
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Jason Domogalla",
+  "license": "ISC"
+}

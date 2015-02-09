@@ -12,85 +12,14 @@
 	    self.projects = [];
 	    self.timeEntries = [];
 
-	    self.startTracking = startTracking;
+	    self.initializeTracking = initializeTracking;
 	    self.stopTracking = stopTracking;
+	    self.saveComment = saveComment;
 
-	    activate();
-	    
-
-		function startTracking(task, project){
-			var startTime = new Date();
-
-			// should check if this exists, if it doesnt, create one
-			var defaultRole = project.ProjectRoles[0];
-
-			// Well shit - this shouldnt create a new one every time if the person has already started a timeentry on 
-			// this task
-			// basoically if this task has a time entry that has no timeout - continue where they left off?
-			// otherwise make a new one!!! 
-
-			task.newTimeEntry = {
-	            ProjectRoleId: defaultRole.ProjectRoleId,
-				ProjectTaskId: task.ProjectTaskId,
-				Billable: task.Billable,
-				TimeIn:  startTime,
-				TimeOut: undefined,
-	            Comment: "",
-	            isInTrackingMode: true,
-	            Hours: "", 
-	            TimeEntryId: undefined,
-	        };
-			
-			var formattedTime = $filter('date')(startTime, 'M/d/yyyy hh:mma');
-
-			// var currentTime = new Date();
-			// console.log($filter('date')((currentTime - task.newTimeEntry.TimeIn), 'hh:mm:ss'));
+	    activate();	  
 
 
-			startClock(task);
-
-			var formattedTimeEntry = {
-				"ProjectRoleId": defaultRole.ProjectRoleId,
-				"ProjectTaskId": task.ProjectTaskId,
-				"Billable": task.Billable,
-				"TimeIn":  formattedTime,
-				"TimeOut": undefined,
-	            "Comment": undefined,
-			};
-
-			httpService.createItem('TimeEntries', formattedTimeEntry).then(function(data) {
-				console.log('time entry started');
-				task.newTimeEntry.TimeEntryId = data.TimeEntryId;
-			});
-		}
-		
-		function stopTracking(task){
-			var currentTime = new Date();
-			
-
-			task.newTimeEntry.isInTrackingMode = false;
-
-			console.log("stopping time");
-
-			$interval.cancel(task.currentInterval);
-
-			// console.log(formatTimeForServer(task.newTimeEntry.TimeIn));
-			// console.log(currentTime);
-
-
-			var formattedTimeEntry = {
-				"ProjectTaskId": task.newTimeEntry.ProjectTaskId,
-				"ProjectRoleId": task.newTimeEntry.ProjectRoleId,
-				"TimeIn": formatTimeForServer(task.newTimeEntry.TimeIn),
-				"TimeOut": formatTimeForServer(currentTime),
-				"Comment": task.newTimeEntry.Comment,
-			};
-
-	  		httpService.updateItem('TimeEntries', task.newTimeEntry.TimeEntryId, formattedTimeEntry).then(function(data) {
-				self.timeEntries.push(task.newTimeEntry);
-			});
-		}
-		function activate(){
+	    function activate(){
 			var halfLoaded = false;
 
 			// Grab all the projects -- 
@@ -124,9 +53,87 @@
 				}
 			});
 
+		}  
+		function saveComment(task){
+			var formattedTimeEntry = {
+				"ProjectTaskId": task.newTimeEntry.ProjectTaskId,
+				"ProjectRoleId": task.newTimeEntry.ProjectRoleId,
+				"TimeIn": formatTimeForServer(task.newTimeEntry.TimeIn),
+				"Comment": task.newTimeEntry.Comment,
+			};
+
+			httpService.updateItem('TimeEntries', task.newTimeEntry.TimeEntryId, formattedTimeEntry).then(function(data) {
+				console.log('comment saved');
+			});
+		}
+
+		function initializeTracking(task, project){
+			var startTime = new Date();
+
+			var defaultRole = project.ProjectRoles[0];
+
+			task.newTimeEntry = {
+	            ProjectRoleId: defaultRole.ProjectRoleId,
+				ProjectTaskId: task.ProjectTaskId,
+				Billable: task.Billable,
+				TimeIn:  startTime,
+				TimeOut: undefined,
+	            Comment: "",
+	            isInTrackingMode: true,
+	            Hours: "", 
+	            TimeEntryId: undefined,
+	        };
+			
+			var formattedTime = $filter('date')(startTime, 'M/d/yyyy hh:mma');
+
+			if(self.activeTask){
+				stopTracking(self.activeTask);
+			}
+
+			startClock(task);
+
+			var formattedTimeEntry = {
+				"ProjectRoleId": defaultRole.ProjectRoleId,
+				"ProjectTaskId": task.ProjectTaskId,
+				"Billable": task.Billable,
+				"TimeIn":  formattedTime,
+				"TimeOut": undefined,
+	            "Comment": undefined,
+			};
+
+			httpService.createItem('TimeEntries', formattedTimeEntry).then(function(data) {
+				console.log('time entry started');
+				task.newTimeEntry.TimeEntryId = data.TimeEntryId;
+			});
+		}
+		
+		function stopTracking(task){
+			var currentTime = new Date();
+			
+			task.newTimeEntry.isInTrackingMode = false;
+
+			console.log("stopping time");
+
+			$interval.cancel(task.currentInterval);
+
+
+			var formattedTimeEntry = {
+				"ProjectTaskId": task.newTimeEntry.ProjectTaskId,
+				"ProjectRoleId": task.newTimeEntry.ProjectRoleId,
+				"TimeIn": formatTimeForServer(task.newTimeEntry.TimeIn),
+				"TimeOut": formatTimeForServer(currentTime),
+				"Comment": task.newTimeEntry.Comment,
+			};
+
+	  		httpService.updateItem('TimeEntries', task.newTimeEntry.TimeEntryId, formattedTimeEntry).then(function(data) {
+				self.timeEntries.push(task.newTimeEntry);
+				// nuke the newTimeEntry
+				task.newTimeEntry = {};
+			});
 		}
 
 		function startClock(task){
+			self.activeTask = task;
 			task.currentInterval = $interval(function(){
 				var currentTime = new Date();
 				var timeDifference = currentTime - task.newTimeEntry.TimeIn;
@@ -145,14 +152,6 @@
 			}, 1000);
 		}
 
-		function stopClock(task){			
-			task.newTimeEntry.isInTrackingMode = false;
-
-			console.log("stopping time");
-
-			$interval.cancel(task.currentInterval);
-		}
-
 		function restartRunningTimeEntry(){
 			for(var i = 0; i < self.timeEntries.length; i++){
 				if(self.timeEntries[i].TimeOut === null){
@@ -165,6 +164,7 @@
 					// hook it on as newTimeEntry
 					// then starttiming
 					activeTask.newTimeEntry = self.timeEntries[i];
+
 					startClock(activeTask);
 
 				}

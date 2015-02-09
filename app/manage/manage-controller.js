@@ -76,6 +76,8 @@
 				"ProjectId": project.ProjectId,
 				"Name": task.Name,
 				"Billable": task.Billable,
+				"RequireComment": task.RequireComment,
+				
 			};
 
 
@@ -90,6 +92,7 @@
 				"ProjectId": project.ProjectId,
 				"Name": task.Name,
 				"RequireComment": task.RequireComment,
+				"Billable": task.Billable,
 			};
 
 			httpService.updateItem('ProjectTasks', task.ProjectTaskId, cleanedTaskComment).then(function(data) {

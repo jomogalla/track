@@ -17,28 +17,52 @@ X add requirecomment boolean task functionality
 X configure routing
 X FIX GULP FILE SO IT ACTUALLY PUTS FILES INTO THE BUILD FOLDER
 X Have tracking page load any unstopped timeentries as running
-> Use LESS
-X change controllers to Papa Style
-> add navbar to its on file & controller
-> add active navigation items
-> update comments to save on change
-> if you start one task, it ends any currently running tasks
-> get timeentries to add to the time entry list when stopped(probably with a get request, not from the system)
 X set up angular to use templates
-> refactor angular-stuff.js into separate controller files
+X change controllers to Papa Style
+X add navbar to its on file & controller
+X add active navigation items
 X make start/stop time display to be more robust.
+X refactor angular-stuff.js into separate controller files
+X get timeentries to add to the time entry list when stopped(probably with a get request, not from the system)
+X organize view so it separates time entries between dates
+X if you start one task, it ends any currently running tasks
+X logout
+X route changes based on logged in status 
+X Use LESS
+
+> Move server formatting into a service?
+> Use npm init in folder to create package.json
+> Responsive nav bar
+> Do the get requests for controllers in the routing
+> reorganize stoptracking/clock, starttracking/clock, and restart
+> Gulp inject scripts
+> Gulp minify/concatenate
+
+
+> update comments to save on change
+
+
+-- Big Items --
+> Bower Package Management
+> Gulp Unit Testing
+
+
 > make comments on view page editable
 > make time on view page editable
 > allow deleting of entries on view page
-> organize view so it separates time entries between dates
+
 > remove tracking and editing from tables? 
 > ngblur on a task name change wont send data to the server
 
-
+>> Routing <<
+/ - if logged in > track
+	else > login
 
 
 >>> BUGs <<<<
-> When RequireComment and Billable are both switched to true, one of them sets itself to false
+X When RequireComment and Billable are both switched to true, one of them sets itself to false
 	^ WHAT THE HELL IS GOING ON HERE, THE REQUESTS ARE ALL GOOD
 > Cant add task after a project is freshly created
 	probably need to do a get request then add the project to the list of projects
+> Timer in tracking adds 4 hours to the timer
+> start, stop, then start a time entry, causes bad put data
