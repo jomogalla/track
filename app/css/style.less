@@ -54,6 +54,70 @@
 .white{
   background-color: lighten(@body-bg, 3%)
 }
+.navbar-nav{
+  @media (min-width: @screen-xs-min) and (max-width: @screen-xs-max) {
+    margin:  7.5px;  
+  }
+}
+.secret-input{
+  background-color: inherit;
+  border: none;
+}
+.comment-div{
+  background-color: inherit;
+  border: none;
+  min-width: 100%;
+  overflow: hidden;
+  vertical-align: top;
+  resize: none;
+  font-size: @font-size-base;
+  word-wrap: break-word;
+  -webkit-transition: height 0.2s;
+  -moz-transition: height 0.2s;
+  -ms-transition: height 0.2s;
+  -o-transition: height 0.2s;
+  transition: height 0.2s;
+}
+.autoresize-wrapper{
+  position: relative;
+}
+.view-table td{
+  vertical-align: middle !important;
+  font-size: @font-size-large;
+}
+.text-time tr td input, .text-time tr td button, .text-time tr td a{
+  background-color: inherit;
+  border: none;
+  border-radius: 0;
+  box-shadow: none;
+  padding: 0;
+  height: auto;
+  vertical-align: bottom;
+  // width: auto;
+}
+.text-time .form-group{
+  width: 20px !important;
+}
+table tr td .glyphicon{
+  visibility: hidden;
+}
+table tr:hover td .glyphicon{
+  visibility: visible;
+}
+table tr td .comment-div::-webkit-input-placeholder {
+  text-indent: -10000px;
+}
+table tr:hover td .comment-div::-webkit-input-placeholder{
+  text-indent: 0px;
+}
+.show-transition{
+  -webkit-transition:all linear 1s;
+  transition:all linear 1s;
+}
+.text-input{
+  background-color: inherit;
+  border: none;
+}
 /* Sign In Stuff */
 .form-signin {
   max-width: 330px;

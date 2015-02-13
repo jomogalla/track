@@ -8,7 +8,7 @@ var gulp = require('gulp'),
   express = require('express'),
   livereload = require('connect-livereload'),
   jshint = require('gulp-jshint'),
-  livereloadport = 35729,
+  livereloadport = 35728,
   serverport = 5000;
  
 //We only configure the server here and start it only when running the watch task
@@ -21,7 +21,7 @@ server.use(express.static('./build'));
  
 // Task for sass using libsass through gulp-sass
 gulp.task('css', function(){
-  gulp.src('app/css/*.css*')
+  gulp.src('app/css/*.css')
     .pipe(gulp.dest('build'))
     .pipe(refresh(lrserver));
 });
@@ -30,6 +30,10 @@ gulp.task('less', function(){
     .pipe(less())
     .pipe(gulp.dest('build'))
     .pipe(refresh(lrserver));
+});
+gulp.task('fonts', function(){
+  gulp.src('bootstrap/fonts/*')
+    .pipe(gulp.dest('build/fonts'));
 });
  
 //Task for processing js with browserify
@@ -64,7 +68,7 @@ gulp.task('html', function(){
  
 //Convenience task for running a one-off build
 gulp.task('build', function() {
-  gulp.run('html', 'hint', 'js', 'css', 'less');
+  gulp.run('html', 'hint', 'js', 'css', 'less', 'fonts');
 });
  
 gulp.task('serve', function() {

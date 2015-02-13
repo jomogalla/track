@@ -9,21 +9,23 @@
           </tr>
         </thead>
         <tbody>
-          <tr ng-repeat-start="task in project.ProjectTasks" ng-class="{success:task.newTimeEntry.isInTrackingMode}">
+          <tr ng-repeat-start="task in project.ProjectTasks" ng-class="{success:task.currentlyTracking}">
             <td ng-bind="task.Name">
              
             </td>
-            <td ng-bind="task.newTimeEntry.Hours">
-              
+            <td>
+              <span ng-show="task.currentlyTracking">{{ task.runningTimeEntry.Hours | milToTimeString }}</span>
             </td>
             <td>
-              <button class="btn btn-link btn-xs pull-right" ng-click="vm.initializeTracking(task, project)" ng-show="!task.newTimeEntry.isInTrackingMode"><!-- <i class="fa fa-play"></i> -->start</button>
-              <button class="btn btn-link btn-xs pull-right" ng-click="vm.stopTracking(task, project)" ng-show="task.newTimeEntry.isInTrackingMode"><!-- <i class="fa fa-pause"></i> -->stop</button>
+              <button class="btn btn-link btn-xs pull-right" ng-click="vm.initializeTracking(task, project)" ng-show="!task.currentlyTracking"><!-- <i class="fa fa-play"></i> -->start</button>
+              <button class="btn btn-link btn-xs pull-right" ng-click="vm.stopTracking(task, project)" ng-show="task.currentlyTracking"><!-- <i class="fa fa-pause"></i> -->stop</button>
             </td>
           </tr>
-          <tr ng-repeat-end ng-show="task.newTimeEntry.isInTrackingMode" class="success">
+          <tr ng-repeat-end ng-show="task.currentlyTracking" class="success">
             <td colspan="3">
-              <textarea class="form-control" ng-model="task.newTimeEntry.Comment"></textarea>
+              <div class="autoresize-wrapper">
+                <textarea autoexpand class="comment-div" ng-model="task.runningTimeEntry.Comment" placeholder="add comment"></textarea>
+              </div>
               <button class="btn btn-link btn-xs btn-block" ng-click="vm.saveComment(task)">save comment</button>
             </td>
           </tr>

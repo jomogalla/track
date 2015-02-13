@@ -1,11 +1,16 @@
 <div class="table-responsive">
-  <table class="table table-condensed table-hover">
+  <table class="table table-condensed table-hover view-table">
     <tbody>
       <thead>
         <h2> {{vm.date | date:"EEEE, MMM d"}} 
           <small>
-            <button type="button" class="btn btn-link btn-lg pull-right" ng-click="vm.nextDay()">next</button>
-            <button type="button" class="btn btn-link btn-lg pull-right" ng-click="vm.previousDay()">previous</button>
+            <!-- <button type="button" class="btn btn-link btn-lg pull-right" ng-click="vm.nextDay()">next</button>
+            <button type="button" class="btn btn-link btn-lg pull-right" ng-click="vm.previousDay()">previous</button> -->
+
+            
+            <a href="{{vm.nextDayLink}}" class="pull-right btn btn-link"> next </a>
+            <a href="{{vm.previousDayLink}}" class="pull-right btn btn-link"> previous </a>
+            <input type="date" ng-model="vm.date" class="text-input pull-right">
           </small>
         </h2>
         
@@ -39,17 +44,22 @@
         <td ng-bind="timeEntry.ProjectName">        
         </td>
         <td>
-          {{timeEntry.TimeIn | date:"h:mm a"}}
+          <input type="time" class="text-input" ng-model="timeEntry.TimeIn" ng-change="vm.toggleTimeInChanged(timeEntry)">
+          <button class="btn btn-link" ng-show="timeEntry.timeInChanged" ng-click="vm.saveTimeIn(timeEntry)">save</button>
         </td>
         <td>
-          {{timeEntry.TimeOut | date:"h:mm a"}}
+          <input type="time" class="text-input" ng-model="timeEntry.TimeOut" ng-change="vm.toggleTimeOutChanged(timeEntry)">
+          <button class="btn btn-link" ng-show="timeEntry.timeOutChanged" ng-click="vm.saveTimeOut(timeEntry)">save</button>
         </td>
         <td>
           <span ng-bind="timeEntry.TotalTime" ng-show="timeEntry.TimeOut"></span>
           
         </td>
-        <td ng-bind="timeEntry.Comment">
-
+        <td>
+          <div class="autoresize-wrapper">
+            <textarea autoexpand ng-model="timeEntry.Comment" ng-change="vm.toggleCommentChanged(timeEntry)" class="comment-div" placeholder="add comment"></textarea>
+          </div>
+          <button class="btn btn-link btn-block" ng-show="timeEntry.commentChanged" ng-click="vm.saveComment(timeEntry)">save</button>
         </td>
        <!--  <td>
           {{timeEntry.Billable}}

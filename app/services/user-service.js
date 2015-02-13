@@ -23,13 +23,13 @@
 			if(!username || !password) {
 				if($cookieStore.get('authdata')) {
 					httpService.getCollection('users').then(function(user) {
-						$rootScope.user = user;
-						$rootScope.loggedUser = true;
-						// Redirect to home
-						var currentLoc = $location.path();
-						if(currentLoc === '/login' || currentLoc === '/signup') {
-							$location.path('/');
-						}
+							$rootScope.user = user;
+							$rootScope.loggedUser = true;
+							// Redirect to home
+							var currentLoc = $location.path();
+							if(currentLoc === '/login' || currentLoc === '/signup') {
+								$location.path('/');
+							}
 					});
 				} 
 				else {

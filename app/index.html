@@ -1,6 +1,6 @@
 
 <!DOCTYPE html>
-<html lang="en" ng-app="app" ng-controller="AppCtrl as appViewModel">
+<html lang="en" ng-app="app" ng-controller="AppCtrl as appViewModel" >
   <head>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -26,7 +26,7 @@
 
   </head>
 
-  <body role="document">
+  <body role="document" ng-cloak>
 
     <!-- Fixed navbar -->
     <div ng-include="'navbar/navbar.html'">
@@ -52,6 +52,7 @@
     <script src="services/http-service.js"></script>
     <script src="services/user-service.js"></script>
     <script src="services/auth-service.js"></script>
+    <script src="services/format-time-service.js"></script>
     <script src="track/track-controller.js"></script>
     <script src="view/view-controller.js"></script>
     <script src="manage/manage-controller.js"></script>
@@ -60,6 +61,8 @@
     <script src="navbar/navbar-controller.js"></script>
     <script src="login/login-controller.js"></script>
     <script src="app-controller.js"></script>
+    <script src="filters.js"></script>
+    <script src="view/comment-directive.js"></script>
     
     
   </body>

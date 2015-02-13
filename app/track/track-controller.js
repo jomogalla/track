@@ -5,64 +5,43 @@
 		.module('app')
 		.controller('TrackCtrl', TrackCtrl);
 
-	TrackCtrl.$inject = ['$interval', '$filter','httpService'];
-	function TrackCtrl($interval, $filter, httpService){
+	TrackCtrl.$inject = ['$interval', '$filter', 'httpService', 'FormatTime', 'projects', 'timeEntries'];
+	function TrackCtrl($interval, $filter, httpService, FormatTime, projects, timeEntries){
 	    var self = this;
 	    
-	    self.projects = [];
-	    self.timeEntries = [];
+	    self.projects = projects;
+	    self.timeEntries = timeEntries;
 
 	    self.initializeTracking = initializeTracking;
 	    self.stopTracking = stopTracking;
 	    self.saveComment = saveComment;
 
-	    activate();	  
+	    activate();	
+	    // reInitializeTracking();  
 
 
 	    function activate(){
-			var halfLoaded = false;
-
-			// Grab all the projects -- 
-	    	httpService.getCollection('projects').then(function(projects) {
-				self.projects = projects;
-				if(halfLoaded){
-					restartRunningTimeEntry();
-				}
-				else{
-					halfLoaded = true;
-				}
-			});
-
 			// Grab all the time entries -- 
-		    httpService.getCollection('timeEntries').then(function(timeEntries) {
-				self.timeEntries = timeEntries;
-
-				for(var i = 0; i < timeEntries.length; i++){
-					if(self.timeEntries[i].TimeIn !== null){
-						self.timeEntries[i].TimeIn = formatTimeFromServer(self.timeEntries[i].TimeIn);
-					}
-					if(self.timeEntries[i].TimeOut !== null){
-						self.timeEntries[i].TimeOut = formatTimeFromServer(self.timeEntries[i].TimeOut);
-					}
+			for(var i = 0; i < timeEntries.length; i++){
+				if(self.timeEntries[i].TimeIn !== null){
+					self.timeEntries[i].TimeIn = FormatTime.formatTimeFromServer(self.timeEntries[i].TimeIn);
 				}
-				if(halfLoaded){
-					restartRunningTimeEntry();
+				if(self.timeEntries[i].TimeOut !== null){
+					self.timeEntries[i].TimeOut = FormatTime.formatTimeFromServer(self.timeEntries[i].TimeOut);
 				}
-				else{
-					halfLoaded = true;
-				}
-			});
+			}
+			reInitializeTracking();
 
 		}  
 		function saveComment(task){
 			var formattedTimeEntry = {
-				"ProjectTaskId": task.newTimeEntry.ProjectTaskId,
-				"ProjectRoleId": task.newTimeEntry.ProjectRoleId,
-				"TimeIn": formatTimeForServer(task.newTimeEntry.TimeIn),
-				"Comment": task.newTimeEntry.Comment,
+				"ProjectTaskId": task.runningTimeEntry.ProjectTaskId,
+				"ProjectRoleId": task.runningTimeEntry.ProjectRoleId,
+				"TimeIn": FormatTime.formatTimeForServer(task.runningTimeEntry.TimeIn),
+				"Comment": task.runningTimeEntry.Comment,
 			};
 
-			httpService.updateItem('TimeEntries', task.newTimeEntry.TimeEntryId, formattedTimeEntry).then(function(data) {
+			httpService.updateItem('TimeEntries', task.runningTimeEntry.TimeEntryId, formattedTimeEntry).then(function(data) {
 				console.log('comment saved');
 			});
 		}
@@ -72,22 +51,24 @@
 
 			var defaultRole = project.ProjectRoles[0];
 
-			task.newTimeEntry = {
+			task.runningTimeEntry = {
 	            ProjectRoleId: defaultRole.ProjectRoleId,
 				ProjectTaskId: task.ProjectTaskId,
 				Billable: task.Billable,
 				TimeIn:  startTime,
 				TimeOut: undefined,
 	            Comment: "",
-	            isInTrackingMode: true,
 	            Hours: "", 
 	            TimeEntryId: undefined,
 	        };
 			
-			var formattedTime = $filter('date')(startTime, 'M/d/yyyy hh:mma');
+			// var formattedTime = $filter('date')(startTime, 'M/d/yyyy hh:mma');
+			var formattedTime = FormatTime.formatTimeForServer(startTime);
 
 			if(self.activeTask){
-				stopTracking(self.activeTask);
+				if(self.activeTask.currentlyTracking){
+					stopTracking(self.activeTask);
+				}
 			}
 
 			startClock(task);
@@ -103,14 +84,14 @@
 
 			httpService.createItem('TimeEntries', formattedTimeEntry).then(function(data) {
 				console.log('time entry started');
-				task.newTimeEntry.TimeEntryId = data.TimeEntryId;
+				task.runningTimeEntry.TimeEntryId = data.TimeEntryId;
 			});
 		}
 		
 		function stopTracking(task){
 			var currentTime = new Date();
 			
-			task.newTimeEntry.isInTrackingMode = false;
+			task.currentlyTracking = false;
 
 			console.log("stopping time");
 
@@ -118,54 +99,49 @@
 
 
 			var formattedTimeEntry = {
-				"ProjectTaskId": task.newTimeEntry.ProjectTaskId,
-				"ProjectRoleId": task.newTimeEntry.ProjectRoleId,
-				"TimeIn": formatTimeForServer(task.newTimeEntry.TimeIn),
-				"TimeOut": formatTimeForServer(currentTime),
-				"Comment": task.newTimeEntry.Comment,
+				"ProjectTaskId": task.runningTimeEntry.ProjectTaskId,
+				"ProjectRoleId": task.runningTimeEntry.ProjectRoleId,
+				"TimeIn": FormatTime.formatTimeForServer(task.runningTimeEntry.TimeIn),
+				"TimeOut": FormatTime.formatTimeForServer(currentTime),
+				"Comment": task.runningTimeEntry.Comment,
 			};
+			// self.activeTask = {};
 
-	  		httpService.updateItem('TimeEntries', task.newTimeEntry.TimeEntryId, formattedTimeEntry).then(function(data) {
-				self.timeEntries.push(task.newTimeEntry);
+	  		httpService.updateItem('TimeEntries', task.runningTimeEntry.TimeEntryId, formattedTimeEntry).then(function(data) {
 				// nuke the newTimeEntry
-				task.newTimeEntry = {};
+				
+				// task.newTimeEntry = {};
 			});
 		}
 
 		function startClock(task){
 			self.activeTask = task;
-			task.currentInterval = $interval(function(){
-				var currentTime = new Date();
-				var timeDifference = currentTime - task.newTimeEntry.TimeIn;
-
-				// if statements for just pretty up the display of time
-				if(timeDifference < 60000){
-					task.newTimeEntry.Hours = $filter('date')(timeDifference, 's');
-				}
-				else if(timeDifference < 3600000){
-					task.newTimeEntry.Hours = $filter('date')(timeDifference, 'm:ss');
-				}
-				else{
-					task.newTimeEntry.Hours = $filter('date')(timeDifference, 'h:mm:ss');
-				}
+			task.currentlyTracking = true;
+			updateTimer(task);
+			task.currentInterval = $interval(function(){updateTimer(task);}, 1000);
 				
-			}, 1000);
+		}
+		function updateTimer(task){
+			var currentTime = new Date();
+			var timeDifference = currentTime - task.runningTimeEntry.TimeIn;
+
+			task.runningTimeEntry.Hours = timeDifference;
 		}
 
-		function restartRunningTimeEntry(){
+		function reInitializeTracking(){
 			for(var i = 0; i < self.timeEntries.length; i++){
 				if(self.timeEntries[i].TimeOut === null){
 					self.timeEntries[i].isInTrackingMode = true;
 
 
 
-					var activeTask = findTaskById(self.timeEntries[i].ProjectTaskId);
+					var runningTask = findTaskById(self.timeEntries[i].ProjectTaskId);
 					// find this timeentries task
 					// hook it on as newTimeEntry
 					// then starttiming
-					activeTask.newTimeEntry = self.timeEntries[i];
+					runningTask.runningTimeEntry = self.timeEntries[i];
 
-					startClock(activeTask);
+					startClock(runningTask);
 
 				}
 			}
@@ -180,17 +156,5 @@
 				}
 			}
 		}
-
-		function formatTimeForServer(time){
-	  		return $filter('date')(time, 'M/d/yyyy hh:mma');
-	  	}
-
-		function formatTimeFromServer(time){
-	  		var splitTime = time.split(/[:T-]/);
-	  		var useableDate = new Date(splitTime[0], splitTime[1]-1, splitTime[2], splitTime[3], splitTime[4], splitTime[5]);
-	  		return useableDate;
-		}
 	}
-
-	
 })();

@@ -5,11 +5,11 @@
 		.module('app')
 		.controller('ManageCtrl', ManageCtrl);
 
-	ManageCtrl.$inject = ['$modal','httpService'];
-	function ManageCtrl($modal, httpService){
+	ManageCtrl.$inject = ['$modal','httpService', 'projects'];
+	function ManageCtrl($modal, httpService, projects){
 		var self = this;
 
-		self.projects = [];
+		self.projects = projects;
 
 		self.addProject = addProject;
 		self.addTask = addTask;
@@ -120,9 +120,19 @@
 		}
 		function activate (){
 		    // Grab all the projects -- 
-		    httpService.getCollection('projects').then(function(projects) {
-				self.projects = projects;
-			});
+		 //    httpService.getCollection('projects').then(function(projects) {
+			// 	self.projects = projects;
+			// });
 		}
 	}
+	ManageCtrl.resolve = {
+		projects: function ($q, httpService){
+			var deferred = q.defer();
+
+			httpService.getCollection('projects').then(function(projects) {
+				deferred.resolve(projects);
+			});
+			return deferred.promise;
+		}
+	};
 })();
