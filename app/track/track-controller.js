@@ -15,10 +15,21 @@
 	    self.initializeTracking = initializeTracking;
 	    self.stopTracking = stopTracking;
 	    self.saveComment = saveComment;
+	    self.toggleTracking = toggleTracking;
 
 	    activate();	
 	    // reInitializeTracking();  
 
+	    function toggleTracking(task, project){
+	    	if(task.currentlyTracking){
+	    		// console.log('stop tracking');
+	    		stopTracking(task);
+	    	}
+	    	else{
+	    		// console.log('start trackings');
+	    		initializeTracking(task, project);
+	    	}
+	    }
 
 	    function activate(){
 			// Grab all the time entries -- 

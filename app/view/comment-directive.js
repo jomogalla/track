@@ -24,7 +24,12 @@
     		function autoExpand(){
     			shadowTextArea.value = textArea.value;
     			shadowTextArea.value += "\n";
-    			textArea.style.height = (shadowTextArea.scrollHeight)+ 'px';
+    			if(shadowTextArea.scrollHeight > 40){
+	    			textArea.style.height = (shadowTextArea.scrollHeight)+ 'px';
+	    		}
+	    		else{
+	    			textArea.style.height = "40px";
+	    		}
     		}
 
 
@@ -40,7 +45,6 @@
 
 				// make our shadow text area
 				element.after($compile('<textarea ng-bind="' + scope.textAreaModel + '" class="' + scope.textAreaClass + '"></textarea>')(scope));
-
 
 				shadowTextArea = element.next();
 

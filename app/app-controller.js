@@ -20,7 +20,7 @@
 		// Check if cookie exists
 		if ($cookieStore.get('authdata')) {
 			// login user
-			UserServices.login();
+			UserServices.reAuthenticate();
 		}
 		$rootScope.$on('$routeChangeStart', function(questionable, next){
 			// they are logged

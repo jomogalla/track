@@ -9,22 +9,25 @@
           </tr>
         </thead>
         <tbody>
-          <tr ng-repeat-start="task in project.ProjectTasks" ng-class="{success:task.currentlyTracking}">
+          <tr ng-repeat-start="task in project.ProjectTasks" class="project-task" ng-class="{tracking:task.currentlyTracking, success:task.currentlyTracking}" ng-click="vm.toggleTracking(task, project)">
             <td ng-bind="task.Name">
              
             </td>
             <td>
-              <span ng-show="task.currentlyTracking">{{ task.runningTimeEntry.Hours | milToTimeString }}</span>
+              <span class="hidden-help btn-link" ng-show="task.currentlyTracking">click to stop</span>
+              
             </td>
-            <td>
-              <button class="btn btn-link btn-xs pull-right" ng-click="vm.initializeTracking(task, project)" ng-show="!task.currentlyTracking"><!-- <i class="fa fa-play"></i> -->start</button>
-              <button class="btn btn-link btn-xs pull-right" ng-click="vm.stopTracking(task, project)" ng-show="task.currentlyTracking"><!-- <i class="fa fa-pause"></i> -->stop</button>
+            <td class="text-right" >
+              <span ng-show="task.currentlyTracking">{{ task.runningTimeEntry.Hours | milToTimeString }}</span>
+              <span class="hidden-help btn-link" ng-show="!task.currentlyTracking">click to start</span>
+              <!-- <button class="btn btn-link btn-xs pull-right" ng-click="vm.initializeTracking(task, project)" ng-show="!task.currentlyTracking">start</button> -->
+              <!-- <button class="btn btn-link btn-xs pull-right" ng-click="vm.stopTracking(task, project)" ng-show="task.currentlyTracking">stop</button> -->
             </td>
           </tr>
           <tr ng-repeat-end ng-show="task.currentlyTracking" class="success">
             <td colspan="3">
               <div class="autoresize-wrapper">
-                <textarea autoexpand class="comment-div" ng-model="task.runningTimeEntry.Comment" placeholder="add comment"></textarea>
+                <textarea autoexpand class="comment-div-solid" ng-model="task.runningTimeEntry.Comment" placeholder="add comment"></textarea>
               </div>
               <button class="btn btn-link btn-xs btn-block" ng-click="vm.saveComment(task)">save comment</button>
             </td>

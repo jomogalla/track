@@ -8,9 +8,9 @@
             <button type="button" class="btn btn-link btn-lg pull-right" ng-click="vm.previousDay()">previous</button> -->
 
             
-            <a href="{{vm.nextDayLink}}" class="pull-right btn btn-link"> next </a>
+            <a href="{{vm.nextDayLink}}" class="pull-right btn btn-link" ng-class="{disabled:vm.viewingToday}"> next </a>
             <a href="{{vm.previousDayLink}}" class="pull-right btn btn-link"> previous </a>
-            <input type="date" ng-model="vm.date" class="text-input pull-right">
+            <input type="date" ng-model="vm.date" class="text-input pull-right" ng-change="vm.changeDate()">
           </small>
         </h2>
         
@@ -53,7 +53,6 @@
         </td>
         <td>
           <span ng-bind="timeEntry.TotalTime" ng-show="timeEntry.TimeOut"></span>
-          
         </td>
         <td>
           <div class="autoresize-wrapper">

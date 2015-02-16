@@ -5,18 +5,24 @@
 		.module('app')
 		.controller('ViewCtrl', ViewCtrl);
 
-	ViewCtrl.$inject = ['$scope', '$routeParams', '$filter','httpService', 'FormatTime','timeEntries'];
-	function ViewCtrl($scope, $routeParams,$filter, httpService, FormatTime, timeEntries){
+	ViewCtrl.$inject = ['$scope', '$routeParams', '$filter', '$location','httpService', 'FormatTime','timeEntries'];
+	function ViewCtrl($scope, $routeParams,$filter, $location, httpService, FormatTime, timeEntries){
 
 		var self = this;
 
+		// Time Entries
 		self.timeEntries = timeEntries;
-		self.toggleCommentChanged = toggleCommentChanged;
+
+		self.viewingToday = false;
+
+		// Functions
 		self.saveComment = saveComment;
-		self.toggleTimeInChanged = toggleTimeInChanged;
 		self.saveTimeIn = saveTimeIn;
-		self.toggleTimeOutChanged = toggleTimeOutChanged;
 		self.saveTimeOut = saveTimeOut;
+		self.toggleCommentChanged = toggleCommentChanged;
+		self.toggleTimeInChanged = toggleTimeInChanged;
+		self.toggleTimeOutChanged = toggleTimeOutChanged;
+		self.changeDate = changeDate;
 
 		activate();
 
@@ -29,6 +35,10 @@
 		// 		self.timeEntries = timeEntries;
 		// 	});
 		// });
+		function changeDate(){
+			var newDateLink = '/view/' + (self.date.getMonth()+1) + "/" + self.date.getDate() + "/" + self.date.getFullYear() + "/";
+			$location.path(newDateLink);
+		}
 		function toggleCommentChanged(timeEntry){
 			timeEntry.commentChanged = true;
 		}
@@ -77,47 +87,36 @@
 			});
 		}
 
-		function nextDay(){
-			self.date.setDate(self.date.getDate()+1);
-			var filteredDate = $filter('date')(self.date, 'M-d-yyyy');
-
-			httpService.getItem('timeEntries/date', filteredDate).then(function(timeEntries){
-				for(var i = 0; i < timeEntries.length; i++){
-					timeEntries[i].TimeIn = FormatTime.formatTimeFromServer(timeEntries[i].TimeIn);
-					timeEntries[i].TimeOut = FormatTime.formatTimeFromServer(timeEntries[i].TimeOut);
-				}
-				self.timeEntries = timeEntries;
-			});
-		}
-		function previousDay(){
-			self.date.setDate(self.date.getDate()-1);
-			var filteredDate = $filter('date')(self.date, 'M-d-yyyy');
-
-			httpService.getItem('timeEntries/date', filteredDate).then(function(timeEntries){
-				for(var i = 0; i < timeEntries.length; i++){
-					timeEntries[i].TimeIn = FormatTime.formatTimeFromServer(timeEntries[i].TimeIn);
-					timeEntries[i].TimeOut = FormatTime.formatTimeFromServer(timeEntries[i].TimeOut);
-				}
-				self.timeEntries = timeEntries;
-			});
-		}
-
 		function activate(){
+			// Get the date from the URL
 			if($routeParams.year){
 				self.date = new Date($routeParams.year, ($routeParams.month-1), $routeParams.day);
 			}
+			// IF there isnt one use today
 			else{
-				self.date = new Date();
+				self.date = new Date;
 			}
+
+
+			// Check to see if we are viewing today
+			if(self.date.toDateString() === new Date().toDateString()){
+				self.viewingToday = true;
+			}
+
+
+			// Prep for generating date links
 			var nextDay = new Date();
 			nextDay.setDate(self.date.getDate()+1);
 
 			var previousDay = new Date();
 			previousDay.setDate(self.date.getDate()-1);
+
 			
+			// Generate Links for tomorrow and yesterday
 			self.nextDayLink = "#/view/" + (nextDay.getMonth()+1) + "/" +  nextDay.getDate() + "/" + nextDay.getFullYear() + "/";
 			self.previousDayLink = "#/view/" + (previousDay.getMonth()+1) + "/" +  previousDay.getDate() + "/" + previousDay.getFullYear() + "/";
 
+			// Format those ugly ass dates James sends us
 			for(var i = 0; i < timeEntries.length; i++){
 				if(self.timeEntries[i].TimeIn !== null){
 					self.timeEntries[i].TimeIn = FormatTime.formatTimeFromServer(self.timeEntries[i].TimeIn);

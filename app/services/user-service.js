@@ -13,6 +13,7 @@
 
 		var service = {
 			login:login,
+			reAuthenticate:reAuthenticate,
 			logout:logout,
 			resetUser:resetUser,
 		};
@@ -20,26 +21,26 @@
 		return service;
 
 		function login(username,password) {
-			if(!username || !password) {
-				if($cookieStore.get('authdata')) {
-					httpService.getCollection('users').then(function(user) {
-							$rootScope.user = user;
-							$rootScope.loggedUser = true;
-							// Redirect to home
-							var currentLoc = $location.path();
-							if(currentLoc === '/login' || currentLoc === '/signup') {
-								$location.path('/');
-							}
-					});
-				} 
-				else {
-					$location.path('/login');
+			Auth.setCredentials(username,password);
+
+			return httpService.getCollection('users').then(function(user) {
+				if(user){
+					$rootScope.user = user;
+					$rootScope.loggedUser = true;
+					return true;
 				}
-			} 
-			else {
-				username = saltUserName(username);
-				Auth.setCredentials(username,password);
-				login();
+				else{
+					Auth.clearCredentials();
+					return false;
+				}
+			});
+		}
+		function reAuthenticate(){
+			if($cookieStore.get('authdata')){
+				httpService.getCollection('users').then(function(user) {
+					$rootScope.user = user;
+					$rootScope.loggedUser = true;
+				});
 			}
 		}
 		function logout() {
@@ -49,6 +50,7 @@
 			// Redirect to login
 			$location.path('/login');
 		}
+
 		function resetUser() {
 			$rootScope.user = {
 				Email: '',

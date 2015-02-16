@@ -78,6 +78,23 @@
   -o-transition: height 0.2s;
   transition: height 0.2s;
 }
+.comment-div-solid{
+  background-color: lighten(@brand-success, 48%);
+  border: none;
+  min-width: 100%;
+  overflow: hidden;
+  vertical-align: top;
+  resize: none;
+  font-size: @font-size-base;
+  word-wrap: break-word;
+  -webkit-transition: height 0.2s;
+  -moz-transition: height 0.2s;
+  -ms-transition: height 0.2s;
+  -o-transition: height 0.2s;
+  transition: height 0.2s;
+}
+
+
 .autoresize-wrapper{
   position: relative;
 }
@@ -104,6 +121,15 @@ table tr td .glyphicon{
 table tr:hover td .glyphicon{
   visibility: visible;
 }
+.project-task{
+  cursor: pointer;
+}
+.project-task .hidden-help{
+  visibility: hidden;
+}
+.project-task:hover .hidden-help{
+  visibility: visible;
+}
 table tr td .comment-div::-webkit-input-placeholder {
   text-indent: -10000px;
 }
@@ -117,6 +143,12 @@ table tr:hover td .comment-div::-webkit-input-placeholder{
 .text-input{
   background-color: inherit;
   border: none;
+}
+// .project-task:hover{
+//   background-color: @brand-success !important;
+// }
+.project-task .tracking:hover{
+  background-color: @brand-danger !important;
 }
 /* Sign In Stuff */
 .form-signin {
