@@ -35,6 +35,8 @@ X Do the get requests for controllers in the routing
 X Move server formatting into a service?
 X reorganize stoptracking/clock, starttracking/clock, and restart
 X Do the route get requests resolve in the controller and not in the router?
+X make comments on view page editable
+X make time on view page editable
 
 > Gulp inject scripts
 > Gulp minify/concatenate
@@ -48,16 +50,10 @@ X Do the route get requests resolve in the controller and not in the router?
 > Gulp Unit Testing
 
 
-> make comments on view page editable
-> make time on view page editable
+
 > allow deleting of entries on view page
 
 > remove tracking and editing from tables? 
-
-
->> Routing <<
-/ - if logged in > track
-	else > login
 
 
 >>> BUGs <<<<
@@ -67,5 +63,5 @@ X Timer in tracking adds 4 hours to the timer
 
 > Cant add task after a project is freshly created
 	probably need to do a get request then add the project to the list of projects
-> start, stop, then start a time entry, causes bad put data
+X start, stop, then start a time entry, causes bad put data
 > ngblur on a task name change wont send data to the server
