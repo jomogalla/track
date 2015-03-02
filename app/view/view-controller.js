@@ -6,7 +6,7 @@
 		.controller('ViewCtrl', ViewCtrl);
 
 	ViewCtrl.$inject = ['$scope', '$routeParams', '$filter', '$location','httpService', 'FormatTime','timeEntries'];
-	function ViewCtrl($scope, $routeParams,$filter, $location, httpService, FormatTime, timeEntries){
+	function ViewCtrl($scope, $routeParams, $filter, $location, httpService, FormatTime, timeEntries){
 
 		var self = this;
 
@@ -61,6 +61,11 @@
 			});
 		}
 		function saveTimeOut(timeEntry){
+			if(timeEntry.TimeOut.getFullYear() === 1970){
+				timeEntry.TimeOut.setFullYear(self.date.getFullYear());
+				timeEntry.TimeOut.setMonth(self.date.getMonth());
+				timeEntry.TimeOut.setDate(self.date.getDate());
+			}
 			var formattedTimeEntry = {
 				"ProjectTaskId": timeEntry.ProjectTaskId,
 				"ProjectRoleId": timeEntry.ProjectRoleId,
@@ -94,7 +99,7 @@
 			}
 			// IF there isnt one use today
 			else{
-				self.date = new Date;
+				self.date = new Date();
 			}
 
 

@@ -5,7 +5,7 @@
 		.module('app')
 		.controller('ModalAddTaskCtrl', ModalAddTaskCtrl);
 
-	ModalAddTaskCtrl.$inject = ['$modalInstance','httpService', 'project'];
+	ModalAddTaskCtrl.$inject = ['$modalInstance', 'httpService', 'project'];
 	function ModalAddTaskCtrl ($modalInstance, httpService, project){
 	  	var modalVM = this;
 

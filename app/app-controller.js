@@ -8,7 +8,8 @@
 
 	AppCtrl.$inject = ['httpService'];
 	function AppCtrl (httpService){
-		
+		// this does nothing or does it? ? ? ? ? ? ?
+
 	}
 	runBlock.$inject = ['$rootScope', '$location', '$cookieStore', 'UserServices'];
 	function runBlock ($rootScope, $location, $cookieStore, UserServices){
@@ -20,9 +21,9 @@
 		// Check if cookie exists
 		if ($cookieStore.get('authdata')) {
 			// login user
-			UserServices.reAuthenticate();
+			UserServices.restoreUser();
 		}
-		$rootScope.$on('$routeChangeStart', function(questionable, next){
+		$rootScope.$on('$routeChangeStart', function(event, next){
 			// they are logged
 			if($rootScope.loggedUser || $cookieStore.get('authdata')){
 				// dont let them go to the login page

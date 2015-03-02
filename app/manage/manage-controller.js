@@ -5,7 +5,7 @@
 		.module('app')
 		.controller('ManageCtrl', ManageCtrl);
 
-	ManageCtrl.$inject = ['$modal','httpService', 'projects'];
+	ManageCtrl.$inject = ['$modal', 'httpService', 'projects'];
 	function ManageCtrl($modal, httpService, projects){
 		var self = this;
 
@@ -125,14 +125,4 @@
 			// });
 		}
 	}
-	ManageCtrl.resolve = {
-		projects: function ($q, httpService){
-			var deferred = q.defer();
-
-			httpService.getCollection('projects').then(function(projects) {
-				deferred.resolve(projects);
-			});
-			return deferred.promise;
-		}
-	};
 })();

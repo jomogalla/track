@@ -5,7 +5,10 @@
 
 	angular.module('app')
 		// .service('httpService', ['$http','CONFIG','$rootScope', function($http, CONFIG, $rootScope) {
-		.service('httpService', ['$http','$rootScope', function($http, $rootScope) {
+		.service('httpService', httpService);
+
+	httpService.$inject = ['$http','$rootScope'];
+	function httpService($http, $rootScope) {
 
 			// var baseApiUrl = CONFIG.API_URL + 'api/';
 			var baseApiUrl = 'https://csgprohackathonapi.azurewebsites.net/api/';
@@ -94,5 +97,5 @@
 			function handleSuccess(response) {
 				return (response.data);
 			}
-		}]);
+		}
 })();

@@ -5,7 +5,7 @@
 		.module('app')
 		.controller('LoginCtrl', LoginCtrl);
 
-	LoginCtrl.$inject = ['$cookieStore', 'Auth', '$location','UserServices'];
+	LoginCtrl.$inject = ['$cookieStore', 'Auth', '$location', 'UserServices'];
 	function LoginCtrl($cookieStore, Auth, $location, UserServices){
 		var self = this;
 

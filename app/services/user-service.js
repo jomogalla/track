@@ -13,7 +13,7 @@
 
 		var service = {
 			login:login,
-			reAuthenticate:reAuthenticate,
+			restoreUser:restoreUser,
 			logout:logout,
 			resetUser:resetUser,
 		};
@@ -35,7 +35,7 @@
 				}
 			});
 		}
-		function reAuthenticate(){
+		function restoreUser(){
 			if($cookieStore.get('authdata')){
 				httpService.getCollection('users').then(function(user) {
 					$rootScope.user = user;

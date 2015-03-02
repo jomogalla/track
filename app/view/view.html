@@ -52,7 +52,7 @@
           <button class="btn btn-link" ng-show="timeEntry.timeOutChanged" ng-click="vm.saveTimeOut(timeEntry)">save</button>
         </td>
         <td>
-          <span ng-bind="timeEntry.TotalTime" ng-show="timeEntry.TimeOut"></span>
+          <span >{{timeEntry.TotalTime | adjustedDuration }}</span>
         </td>
         <td>
           <div class="autoresize-wrapper">

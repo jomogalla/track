@@ -5,7 +5,7 @@
 		.module('app')
 		.controller('ModalAddProjectCtrl', ModalAddProjectCtrl);
 
-	ModalAddProjectCtrl.$inject = ['$modalInstance','httpService'];
+	ModalAddProjectCtrl.$inject = ['$modalInstance', 'httpService'];
   	function ModalAddProjectCtrl ($modalInstance, httpService){
 		var modalVM = this;
 

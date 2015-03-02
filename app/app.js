@@ -2,8 +2,8 @@
 	'use strict';
   
 	angular
-		.module('app', ['ui.bootstrap', 'ngRoute', 'ngCookies', 'angular-loading-bar', 'timeFilters', 'myComment'])
-		.config(function($routeProvider){
+		.module('app', ['ui.bootstrap', 'ngRoute', 'ngCookies', 'templates', 'angular-loading-bar', 'timeFilters', 'myComment'])
+		.config(['$routeProvider',function($routeProvider){
 			$routeProvider
 				.when('/', {
 					redirectTo: '/track',
@@ -61,5 +61,5 @@
 				.otherwise({
 					redirectTo: '/track'
 				});
-		});
+		}]);
 })();

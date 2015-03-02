@@ -5,7 +5,7 @@
 		.module('app')
 		.controller('NavBarCtrl', NavBarCtrl);
 
-	NavBarCtrl.$inject = ['$location', '$cookieStore', '$rootScope','UserServices', 'Auth'];
+	NavBarCtrl.$inject = ['$location', '$cookieStore', '$rootScope', 'UserServices', 'Auth'];
 	function NavBarCtrl($location, $cookieStore, $rootScope, UserServices, Auth){
 		self = this;
 

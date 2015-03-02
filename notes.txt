@@ -60,7 +60,7 @@ X make time on view page editable
 X When RequireComment and Billable are both switched to true, one of them sets itself to false
 	^ WHAT THE HELL IS GOING ON HERE, THE REQUESTS ARE ALL GOOD
 X Timer in tracking adds 4 hours to the timer
-
+> When selecting time out on view the date is auto set for 1970, not the day of timein
 > Cant add task after a project is freshly created
 	probably need to do a get request then add the project to the list of projects
 X start, stop, then start a time entry, causes bad put data
